@@ -1,0 +1,13 @@
+.quick-table-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    overflow: auto;
+}
+
+select {
+    border: 1px solid red;
+    width: 100%;
+    text-overflow: ellipsis;
+}
