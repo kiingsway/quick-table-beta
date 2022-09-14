@@ -4,7 +4,7 @@ export interface IQuickTableProps {
 
   globalSearchable?: boolean
   searchPlaceholder?: string;
-  
+
   tableClassName?: string;
   thClassName?: string;
   tdClassName?: string;
@@ -15,4 +15,9 @@ export interface IQuickTableColumn {
   acessor: string;
   sorteable?: boolean;
   filterable?: boolean;
+}
+
+export interface IFilterByField {
+  acessor: string;
+  value: string;
 }
