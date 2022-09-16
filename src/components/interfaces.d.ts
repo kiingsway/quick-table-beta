@@ -3,7 +3,9 @@ export interface IQuickTableProps {
   data: any[];
 
   globalSearchable?: boolean
-  searchPlaceholder?: string;
+  counter?: boolean;
+
+  searchPlaceholderText?: string;
 
   tableClassName?: string;
   thClassName?: string;

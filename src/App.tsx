@@ -18,15 +18,12 @@ function App() {
   const dataColumns2: IQuickTableColumnDefinition[] = [
     { title: 'nome', acessor: 'nome' },
     { title: 'idade', acessor: 'idade' },
-    { title: 'cpf', acessor: 'cpf' },
-    { title: 'rg', acessor: 'rg' },
+    { title: 'telefone_fixo', acessor: 'telefone_fixo' },
     { title: 'data_nasc', acessor: 'data_nasc' },
     { title: 'sexo', acessor: 'sexo' },
     { title: 'signo', acessor: 'signo' },
     { title: 'endereco', acessor: 'endereco' },
     { title: 'numero', acessor: 'numero' },
-    { title: 'peso', acessor: 'peso' },
-    { title: 'tipo_sanguineo', acessor: 'tipo_sanguineo' },
   ]
 
 
@@ -34,8 +31,6 @@ function App() {
     <QuickTable
       columns={dataColumns2}
       data={data2}
-
-
     />
   );
 }

@@ -10,6 +10,33 @@ select {
     border: 1px solid black;
     width: 100%;
     text-overflow: ellipsis;
-    margin: 0px 3px;
-    padding: 0px 3px;
+}
+
+.quick-table-column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.quick-table-column:hover .quick-table-column-dropdownIcon {
+    visibility: visible !important;
+    opacity: 1;
+    transition: opacity 200ms linear;
+}
+
+.quick-table-column-sortIcon {
+    margin: 1px 4px 0 6px;
+}
+
+.quick-table-column-dropdownIcon {
+    opacity: 0;
+    transition: visibility 0s 200ms, opacity 200ms linear;
+    margin: 2px 0 0 6px;
+}
+
+.quick-table-column-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
