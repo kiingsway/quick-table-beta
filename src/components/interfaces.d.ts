@@ -29,13 +29,7 @@ export interface IFilterByField {
   value: string;
 }
 
-export interface IQuickTableStyle {
-  all?: React.CSSProperties;
-  searchText?: React.CSSProperties;
-  counter?: React.CSSProperties;
-  table?: React.CSSProperties;
-  th?: React.CSSProperties;
-  td?: React.CSSProperties;
-  filterSelectOutline?: React.CSSProperties;
-  filterSelect?: React.CSSProperties;
-}
+type PartialRecord<K extends string | number | symbol, T> = { [P in K]?: T; }
+
+type TStylesTypes = 'all' | 'searchText' | 'counter' | 'table' | 'th' | 'td' | 'filterSelectOutline' | 'filterSelect'
+export type IQuickTableStyle = PartialRecord<TStylesTypes, React.CSSProperties>

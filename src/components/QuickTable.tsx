@@ -4,6 +4,9 @@ import { BsChevronDown, BsSortUp, BsSortDownAlt } from 'react-icons/bs'
 import uuid from 'react-uuid';
 import styles from './QuickTable.module.scss'
 
+export interface IQuickTableStyleDefinition extends IQuickTableStyle { }
+export interface IQuickTableColumnDefinition extends IQuickTableColumn { }
+
 export default function QuickTable(props: IQuickTableProps) {
 
   const [search, setSearch] = useState<string>('');
@@ -174,6 +177,3 @@ const getPropWithString: any = (obj: any, prop: string) => {
 const sortByProp = (a: any, b: any, property: string, order: 'asc' | 'desc') => {
   return order === 'asc' ? ("" + a[property]).localeCompare(b[property], undefined, { numeric: true }) : ("" + b[property]).localeCompare(a[property], undefined, { numeric: true })
 }
-
-export interface IQuickTableStyleDefinition extends IQuickTableStyle { }
-export interface IQuickTableColumnDefinition extends IQuickTableColumn { }
