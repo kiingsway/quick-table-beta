@@ -1,10 +1,14 @@
-.QuickTable {
+.Table {
     &_Container {
         display: flex;
         flex-direction: column;
         width: 100%;
         padding: 10px;
         overflow: auto;
+    }
+    &_GlobalFilter::placeholder {
+        color: inherit;
+        opacity: .7;
     }
     &_Column {
         display: flex;
@@ -30,10 +34,8 @@
             transition: opacity 200ms linear;
         }
         &_FilterSelect {
-            border: 1px solid black;
             width: 100%;
             text-overflow: ellipsis;
-            padding: 2px 5px;
         }
     }
 }

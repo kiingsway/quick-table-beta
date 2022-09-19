@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { IFilterByField, IQuickTableColumn, IQuickTableProps } from './interfaces';
+import { IFilterByField, IQuickTableColumn, IQuickTableProps, IQuickTableStyle } from './interfaces';
 import { BsChevronDown, BsSortUp, BsSortDownAlt } from 'react-icons/bs'
 import uuid from 'react-uuid';
 import styles from './QuickTable.module.scss'
@@ -10,7 +10,7 @@ export default function QuickTable(props: IQuickTableProps) {
   const [sort, setSort] = useState<{ prop?: string; order: 'asc' | 'desc' }>({ prop: undefined, order: 'asc' });
   const [fitlersByField, setFilterByField] = useState<IFilterByField[]>([]);
 
-  const propsOrDefault: Partial<IQuickTableProps> = {
+  const propsOrDefault: Pick<IQuickTableProps, 'globalSearchable' | 'counter' | 'searchPlaceholderText'> = {
     globalSearchable: props.globalSearchable === undefined ? true : props.globalSearchable,
     searchPlaceholderText: props.searchPlaceholderText === undefined ? 'Pesquisar...' : props.searchPlaceholderText,
     counter: props.counter === undefined ? true : props.counter,
@@ -63,66 +63,66 @@ export default function QuickTable(props: IQuickTableProps) {
       [null, ...tableDataColumnUnique.filter(val => Boolean(val || val === 0))] : tableDataColumnUnique
 
     return (
-      <select
-        className={styles.QuickTable_Column_FilterSelect}
-        title={`Filtrar campo "${pr.column}"`}
-        onChange={e => handlerSetFilterByField(e, pr.column.acessor)}
-        value={fitlersByField.filter(f => f.acessor === pr.column.acessor)[0]?.value || ''}>
-        <option value="">--</option>
-        {tableDataColumnUnique.map(opt => <option value={opt || opt === 0 ? opt : '!@null@!'} key={uuid()}>{opt || opt === 0 ? opt : '(vazio)'}</option>)}
-      </select>
+      <div style={props.style?.filterSelectOutline}>
+
+        <select
+          style={props.style?.filterSelect}
+          className={styles.Table_Column_FilterSelect}
+          title={`Filtrar campo "${pr.column}"`}
+          onChange={e => handlerSetFilterByField(e, pr.column.acessor)}
+          value={fitlersByField.filter(f => f.acessor === pr.column.acessor)[0]?.value || ''}>
+          <option value="">--</option>
+          {tableDataColumnUnique.map(opt => <option value={opt || opt === 0 ? opt : '!@null@!'} key={uuid()}>{opt || opt === 0 ? opt : '(vazio)'}</option>)}
+        </select>
+      </div>
     )
   }
 
   return (
-    <div className={styles.QuickTable_Container}>
-
+    <div className={styles.Table_Container} style={props.style?.all}>
       <div>
+        {propsOrDefault.globalSearchable ?
+          <input
+            className={styles.Table_GlobalFilter}
+            style={props.style?.searchText}
+            type="text"
+            value={search}
+            placeholder={propsOrDefault.searchPlaceholderText}
+            onChange={e => setSearch(e.target.value)}
+          />
+          : null}
 
-        {
-          propsOrDefault.globalSearchable ?
-            <input
-              type="text"
-              value={search}
-              placeholder={propsOrDefault.searchPlaceholderText}
-              onChange={e => setSearch(e.target.value)}
-            /> : null
-        }
-
-        {
-          propsOrDefault.counter ?
-            <>{tableData.length} {tableData.length !== tableDataOriginal.length ? `(de ${tableDataOriginal.length})` : ''} itens</>
-            : null
-        }
+        {propsOrDefault.counter ?
+          <span style={props.style?.counter}>{tableData.length} {tableData.length !== tableDataOriginal.length ? `(de ${tableDataOriginal.length})` : ''} itens</span>
+          : null}
 
       </div>
-
-
-      <table className={props.tableClassName}>
+      <table className={props.tableClassName + ' ' + styles.Table} style={props.style?.table}>
         <thead>
           <tr>
             {props.columns.map(col => {
 
               return (
                 <th
-                  key={col.acessor}
-                  id={`quick-table-col-${col.acessor}`}
-                  className={props.thClassName}
+                key={col.acessor}
+                id={`quick-table-col-${col.acessor}`}
+                className={props.thClassName}
                 >
                   <div
-                    className={styles.QuickTable_Column}
+                  style={props.style?.th}
+                    className={styles.Table_Column}
                     onClick={col.sorteable !== false ? () => handleSort(col.acessor) : undefined}>
-                    <span className={styles.QuickTable_Column_Text}>{col.title}</span>
+                    <span className={styles.Table_Column_Text}>{col.title}</span>
 
-                    <BsChevronDown className={styles.QuickTable_Column_MenuIcon} />
+                    {/* <BsChevronDown className={styles.Table_Column_MenuIcon} /> */}
 
                     {
                       sort.prop === col.acessor ?
                         (
                           sort.order === 'asc' ?
-                            <BsSortDownAlt className={styles.QuickTable_Column_SortIcon} />
+                            <BsSortDownAlt className={styles.Table_Column_SortIcon} />
                             :
-                            <BsSortUp className={styles.QuickTable_Column_SortIcon} />
+                            <BsSortUp className={styles.Table_Column_SortIcon} />
                         )
                         : null
                     }
@@ -145,6 +145,7 @@ export default function QuickTable(props: IQuickTableProps) {
 
                   return (
                     <td
+                      style={props.style?.td}
                       className={props.tdClassName}
                       key={uuid()}>
                       {item[col.acessor]}
@@ -175,4 +176,5 @@ const sortByProp = (a: any, b: any, property: string, order: 'asc' | 'desc') => 
   return order === 'asc' ? ("" + a[property]).localeCompare(b[property], undefined, { numeric: true }) : ("" + b[property]).localeCompare(a[property], undefined, { numeric: true })
 }
 
+export interface IQuickTableStyleDefinition extends IQuickTableStyle { }
 export interface IQuickTableColumnDefinition extends IQuickTableColumn { }
