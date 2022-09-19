@@ -21,6 +21,7 @@ export interface IQuickTableColumn {
   acessor: string;
   sorteable?: boolean;
   filterable?: boolean;
+  render?: (string) => JSX.Element;
 }
 
 export interface IFilterByField {

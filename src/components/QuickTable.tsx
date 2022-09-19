@@ -104,12 +104,12 @@ export default function QuickTable(props: IQuickTableProps) {
 
               return (
                 <th
-                key={col.acessor}
-                id={`quick-table-col-${col.acessor}`}
-                className={props.thClassName}
+                  key={col.acessor}
+                  id={`quick-table-col-${col.acessor}`}
+                  className={props.thClassName}
                 >
                   <div
-                  style={props.style?.th}
+                    style={props.style?.th}
                     className={styles.Table_Column}
                     onClick={col.sorteable !== false ? () => handleSort(col.acessor) : undefined}>
                     <span className={styles.Table_Column_Text}>{col.title}</span>
@@ -148,7 +148,12 @@ export default function QuickTable(props: IQuickTableProps) {
                       style={props.style?.td}
                       className={props.tdClassName}
                       key={uuid()}>
-                      {item[col.acessor]}
+                      {
+                        col.render ?
+                          col.render(item[col.acessor])
+                          :
+                          item[col.acessor]
+                      }
                     </td>
 
                   )

@@ -56,7 +56,7 @@ function App() {
       fontWeight: 500
     },
     td: {
-      padding:'10px',
+      padding: '10px',
       borderBottom: '1px solid #555'
     }
 
