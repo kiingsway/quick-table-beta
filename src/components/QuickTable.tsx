@@ -148,14 +148,8 @@ export default function QuickTable(props: IQuickTableProps) {
                       style={props.style?.td}
                       className={props.tdClassName}
                       key={uuid()}>
-                      {
-                        col.render ?
-                          col.render(item[col.acessor])
-                          :
-                          item[col.acessor]
-                      }
+                      {col.render ? col.render(item[col.acessor]) : item[col.acessor]}
                     </td>
-
                   )
                 })}
               </tr>
