@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { IFilterByField, IQuickTableColumn, IQuickTableProps } from './interfaces';
 import { BsChevronDown, BsSortUp, BsSortDownAlt } from 'react-icons/bs'
 import uuid from 'react-uuid';
-import './QuickTable.css'
+import styles from './QuickTable.module.scss'
 
 export default function QuickTable(props: IQuickTableProps) {
 
@@ -64,6 +64,7 @@ export default function QuickTable(props: IQuickTableProps) {
 
     return (
       <select
+        className={styles.QuickTable_Column_FilterSelect}
         title={`Filtrar campo "${pr.column}"`}
         onChange={e => handlerSetFilterByField(e, pr.column.acessor)}
         value={fitlersByField.filter(f => f.acessor === pr.column.acessor)[0]?.value || ''}>
@@ -74,7 +75,7 @@ export default function QuickTable(props: IQuickTableProps) {
   }
 
   return (
-    <div className='quick-table-container'>
+    <div className={styles.QuickTable_Container}>
 
       <div>
 
@@ -85,13 +86,13 @@ export default function QuickTable(props: IQuickTableProps) {
               value={search}
               placeholder={propsOrDefault.searchPlaceholderText}
               onChange={e => setSearch(e.target.value)}
-            /> : <></>
+            /> : null
         }
 
         {
           propsOrDefault.counter ?
             <>{tableData.length} {tableData.length !== tableDataOriginal.length ? `(de ${tableDataOriginal.length})` : ''} itens</>
-            : <></>
+            : null
         }
 
       </div>
@@ -108,24 +109,26 @@ export default function QuickTable(props: IQuickTableProps) {
                   id={`quick-table-col-${col.acessor}`}
                   className={props.thClassName}
                 >
-                  <div className='quick-table-column' onClick={col.sorteable !== false ? () => handleSort(col.acessor) : undefined}>
-                    <span className='quick-table-column-text'>{col.title}</span>
+                  <div
+                    className={styles.QuickTable_Column}
+                    onClick={col.sorteable !== false ? () => handleSort(col.acessor) : undefined}>
+                    <span className={styles.QuickTable_Column_Text}>{col.title}</span>
 
-                    {/* <BsChevronDown className='quick-table-column-dropdownIcon' /> */}
+                    <BsChevronDown className={styles.QuickTable_Column_MenuIcon} />
 
                     {
                       sort.prop === col.acessor ?
                         (
-                          sort.order === 'desc' ?
-                            <BsSortUp className='quick-table-column-sortIcon' />
+                          sort.order === 'asc' ?
+                            <BsSortDownAlt className={styles.QuickTable_Column_SortIcon} />
                             :
-                            <BsSortDownAlt className='quick-table-column-sortIcon' />
+                            <BsSortUp className={styles.QuickTable_Column_SortIcon} />
                         )
-                        : <></>
+                        : null
                     }
 
                   </div>
-                  {col.filterable !== false ? <OptionFilter column={col} /> : <></>}
+                  {col.filterable !== false ? <OptionFilter column={col} /> : null}
                 </th>
               )
             })}
